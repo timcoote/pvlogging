@@ -19,10 +19,10 @@ Vagrant.configure("2") do |config|
     sut.vm.hostname = 'R-on-fedora'
 
     sut.vm.provider :virtualbox do |vb|
-     #config.vm.box = "fedora/30-cloud-base"
+     config.vm.box = "fedora/32-cloud-base"
      # more up to date?
      # still fails config.vm.box = "bento/fedora-30"
-     config.vm.box = "bento/fedora-28"
+     #config.vm.box = "bento/fedora-28"
      #sut.vm.box = "test-mercury-baseline"
      sut.vm.box_url = "file://../remote-mercury/output-vagrant/package.box"
      #vb.customize ["modifyvm", :id, "--memory", "1024"]
@@ -46,9 +46,9 @@ Vagrant.configure("2") do |config|
        #echo 'install.packages("ggvis", repos="https://cran.rstudio.com")' | R --no-save'
        curl -O https://download1.rstudio.org/desktop/centos8/x86_64/rstudio-1.3.1056-x86_64.rpm
        dnf install -y rstudio-1.3.1056-x86_64.rpm
-       dnf install -y libxml2-devel alsa-lib libXcomposite tigervnc-server fontconfig R libcurl-devel openssl-devel
+       dnf install -y libxml2-devel alsa-lib libXcomposite tigervnc-server fontconfig R libcurl-devel openssl-devel R-devtools
        curl -O https://cran.r-project.org/src/contrib/devtools_2.3.1.tar.gz
-       R CMD install devtools_2.3.1.tar.gz
+       R CMD INSTALL devtools_2.3.1.tar.gz
     SHELL
   end
 
