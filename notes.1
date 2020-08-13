@@ -1,0 +1,42 @@
+notes on trying to bisect dplyr
+
+first commit on master that 0.8.5 is descended from: b7f4f4dfb4. 
+check it out and install_local ("dplyr") after running rstudio (set DISPLAY=:1) in ~/tim. needs more ram: runs out!
+
+Confirmed that HEAD fails and the first commit succeeds. If I'm going to bisect this, it may make sense to put the repo on the mac, rather than the vm home directory
+
+
+git bisect log:
+git bisect log
+git bisect start
+# bad: [90b3e4ea164514b57c72954c89dc63ab958eceb0] Bullet errors for summarise() (#4729)
+git bisect bad 90b3e4ea164514b57c72954c89dc63ab958eceb0
+# bad: [90b3e4ea164514b57c72954c89dc63ab958eceb0] Bullet errors for summarise() (#4729)
+git bisect bad 90b3e4ea164514b57c72954c89dc63ab958eceb0
+# good: [689518b4eb6adcfdeb5917dd97d41419b3e3d69b] Improve arrange docs
+git bisect good 689518b4eb6adcfdeb5917dd97d41419b3e3d69b
+# good: [3d45972610542138a790d8c1cd00a5990c0a1304] Upgrade tidyselect (#4720)
+git bisect good 3d45972610542138a790d8c1cd00a5990c0a1304
+# good: [cab26df184fa7032a16faa602fc529542b508be1] Remove unnused match_vars() function
+git bisect good cab26df184fa7032a16faa602fc529542b508be1
+# good: [dc8ebd4cb07c61a5e8fb9648a87fbf2f4628897a] Fix broken test (#4743)
+git bisect good dc8ebd4cb07c61a5e8fb9648a87fbf2f4628897a
+# good: [f7f66821327ce41f9a9a49bfc0f61434039f864f] Tweak error message
+git bisect good f7f66821327ce41f9a9a49bfc0f61434039f864f
+# bad: [887d40bf95cfe8c526245bd61fcde2c18af65e9d] Set tibble version (#4745)
+git bisect bad 887d40bf95cfe8c526245bd61fcde2c18af65e9d
+# bad: [125d75d6f76c78c27da45adc258f0b8b6a4620df] Simplify group metadata (#4728)
+git bisect bad 125d75d6f76c78c27da45adc258f0b8b6a4620df
+# first bad commit: [125d75d6f76c78c27da45adc258f0b8b6a4620df] Simplify group metadata (#4728)
+
+accpted man and tests. tests still don't work. accepted c++. mtcars %> etc does plot. run into  some rate  limitinig on getting code from github
+
+
+looks like the code that went from R/group_keys.R is what's causing the breakage. This/these have been moved to R/group_data.R and changed somewhat. It should be possible to accpet t
+rest of the files, with possible amends ot NAMESPACE and it work ok.
+
+
+just pulled the fiiles apart from group_keys as I think that's got the culprit iin it. May not have pulled them correclty as will not build in rstudio :-(
+
+got a response on the Issue, and a fix. ddplyr::groups() has changed if no groups were found, it used to return a null. Now it returns a zero length list. The rendering(?) 
+(in vega.R) checks for is.null. 
