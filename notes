@@ -1,0 +1,48 @@
+- next step: check with f32 + current shiny (avoids guest additions). I think that this works, but seems flakey
+- trying to get to safe working state. may need to go to prior to snapahot, if this does not work, as I don't know what to trust!
+
+- move back to snapshot on master (notably version of install.R) try to source this. 
+-- First go is with CRAN packages only. [fail]
+-- Next is with 3 (None) [installs 18 packages, rather than 23, for CRAN] [fail, rlang]
+-- Next is wiith 1 (ALL) [fail]
+
+=> last checkout is NOT a working model!
+
+trial with specific ggvis version, as letting R choose seems to break stuff!
+
+edit install.R to install ggvis version early, as per 800055e9a3. Need to vagrant rsync to get this across. failed first time, retrying after explicit rsync (:-( ). Trying 3 (None), this time as istr that this is what avoids rlang - could be wrong.
+At least ggvis appears to work with a 3 as it got past it in install.R
+
+A question. Assuming that ggvis did get installed at a good version, what's the point in continuing with the other packages?
+Is the ggvis installation with anythign other then "NONE" invalid?
+
+NOT WORKING:
+-try manual with just ggvis/None (fails with rlang on library(ggvis)), ggvis 2 (cran) (fails on library(ggvis) with rlang error), ggvis/empty line?(fail), ggvis/ All (fail), then:
+ - go back to last good checkout and retry with that from vagrant up, rather than snapshot.
+
+gone back to checkpoint 800055e9a3dd7fce581c30b49e73e78d7c909273 and vagrant destroy/up. The move with install.R (I think, although there could be gaps).
+
+errors witth apparent issue with devtools, but it seems to be installed. manual install and start of rstudio-server, when used with browser this shows devtools installed (can just require it)
+then install.packages("ggvis"): -fails no package shiny for it?, so use install_version (from install.R), need to dnf install R-Rcpp-devel..retry install_version [option 3: no updates]
+this failed: ggvis loaded, but did not put dots on the screen!!! let's try with option 1 (all)
+ditto when ggvis failed because of lack of shiny and explicit shiny install.
+
+now with specific version of ggvis, as per earlier install.R
+still getting rlang error,*but* if I restart R, ggvis works and doesn't coomplain.
+
+let's try the restore snapshot: fails: was deleted with early `vagrant destroy`.
+
+Trying the snapshot/restore + ggvis explicit version + R reset
+
+snapshot b4 installing rstudio-server and R-Rcpp-devel, using 1 (all) on installations
+works.
+now to start from the snapshot beyond dnf and pull out some of the packages
+- first attempt had blank line after `source ("/vagrant/iinstall.R"), so minimal upgrades, and again on second request - comes up with rlang error. need to verify impact of not just leaving blank line, but of updating some more packages
+
+- narrowed down to dplyr (+ggvis) as the issue. Validating that shiny not necessary - shiny does not fix it alone. Then try current ggvis with older dplyr. nb the version of ggvis seems to be newer than the latest release tag on github (?)
+
+interestingly, post restore snapshot from post dnf, no login on refresh on browser?
+
+now I'm really unclear. `package.install ("ggvis"), plus version_install ("dplyr", version=0.8.3)` has no dots in the plot. but if I restart the R session, it works. Is there soemthing in how R loads libraries? It distinguishes between `attached packages` and `loaded via a namespace (and not attached)`????
+
+If so, then I think that install.packages("ggvis") ought to fail even with R reset: 
