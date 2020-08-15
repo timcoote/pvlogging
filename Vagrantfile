@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     sut.vm.provision "shell", inline: <<-SHELL
 #       cd /vagrant && rake deploy
 #       trial fedora package for this. It worked if installed after the rstudi rpm on f32
-       dnf install -y rstudio-server # R-shiny
+       dnf install -y rstudio-server rake # R-shiny
 #       dnf install -y R-Rcpp-devel 
        # this is the link to f28 version
  #      curl -O https://download2.rstudio.org/server/centos8/x86_64/rstudio-server-rhel-1.3.1056-x86_64.rpm
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 # using fedora version of rstudio-server above
 #      curl -O https://download1.rstudio.org/desktop/centos8/x86_64/rstudio-1.3.1056-x86_64.rpm
 #       dnf install -y rstudio-1.3.1056-x86_64.rpm
-       dnf install -y libxml2-devel alsa-lib libXcomposite tigervnc-server fontconfig R libcurl-devel openssl-devel R-devtools
+       dnf install -y libxml2-devel alsa-lib libXcomposite tigervnc-server fontconfig R libcurl-devel openssl-devel R-devtools rpmdevtools
 # may need to invoke install.shiny-server, or equiv
     SHELL
   end
