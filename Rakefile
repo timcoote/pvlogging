@@ -26,5 +26,5 @@ end
 
 task 'tarup' do
   #`tar czvf pv-monitor.0.0.1.tar.gz pvplot/today/* shiny-server.conf`
-  `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/* --transform='s,^,pv-monitoring-1/,' shiny-server.conf`
+  `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/* --transform='s,^,pv-monitoring-0.0.1/,' shiny-server.conf aurora`
 end

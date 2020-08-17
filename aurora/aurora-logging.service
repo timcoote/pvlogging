@@ -1,0 +1,15 @@
+[Unit]
+Description=Collects data from the Aurora inverter
+#Documentation=< presented as a url >
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/run-aurora
+Restart=always
+# according to (http://bit.ly/2seiymQ), should keep on restarting forever
+StartLimitInterval=0
+RestartSec=20
+
+[Install]
+WantedBy=multi-user.target

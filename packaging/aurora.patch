@@ -1,0 +1,46 @@
+diff --git a/Makefile b/Makefile
+index 039af00..c911e8e 100755
+--- a/Makefile
++++ b/Makefile
+@@ -8,7 +8,7 @@
+ #TUNE = native
+ 
+ CC = gcc
+-CFLAGS = -O2 -Wall -I/usr/include -I./include
++CFLAGS = -O2 -Wall -I/usr/include -I./include -g
+ OFILES = main.o comm.o
+ 
+ INSTALLSITEMAN1DIR = ${mandir}/man1
+@@ -136,8 +136,8 @@ clean:
+ 	rm -f $(TARGET) *.o
+ 
+ install: aurora
+-	install -m 4711 $(TARGET) $(bindir)
+-	install -m 0644 ${DISTMAN1DIR}/$(TARGET).1 ${INSTALLSITEMAN1DIR}
++	install -D -m 4711 $(TARGET) $(DESTDIR)$(bindir)/$(TARGET)
++	install -D -m 0644 ${DISTMAN1DIR}/$(TARGET).1 $(DESTDIR)${INSTALLSITEMAN1DIR}/$(TARGET).1
+ 
+ uninstall:
+ 	rm -f $(bindir)/$(TARGET) ${INSTALLSITEMAN1DIR}/$(TARGET).1
+diff --git a/main.c b/main.c
+index e05c5a4..df883ed 100755
+--- a/main.c
++++ b/main.c
+@@ -75,7 +75,7 @@
+  */
+ 
+ static char	VersionM[] = "1.9.3";
+-char     VersionC[7];
++extern char     VersionC[7];
+ 
+ #include <syscall.h>
+ #include <unistd.h>
+@@ -134,7 +134,7 @@ struct timeval lastcommtv;
+ 
+ FILE *outfp;
+ 
+-char VersionSHc[6];
++extern char VersionSHc[6];
+ 
+ float yCost = 0.0;
+ char *sCostType = NULL;

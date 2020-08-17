@@ -1,0 +1,10 @@
+/home/tim/logging/output {
+    daily
+    mail tim@example.com
+    copytruncate
+    rotate 23650
+    postrotate
+     pkill aurora || true
+    endscript
+}
+
