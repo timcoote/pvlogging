@@ -1,6 +1,7 @@
+#! /usr/bin/bash
 while true
 do
 # verbose, second device, -c -T -d 0 -e device id
-   sudo strace -o running /usr/local/bin/aurora -a 2 -c -T -d 0 -e /dev/ttyUSB0 >> output
+   sudo strace -o running /usr/local/bin/aurora -a 2 -c -T -d 0 -e /dev/ttyUSB0 >> /var/run/aurora/output
    sleep 1
 done

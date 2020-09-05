@@ -25,6 +25,9 @@ end
 
 
 task 'tarup' do
+  # need to check that this is on guest?
   #`tar czvf pv-monitor.0.0.1.tar.gz pvplot/today/* shiny-server.conf`
-  `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/* --transform='s,^,pv-monitoring-0.0.1/,' shiny-server.conf aurora`
+  `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/*  aurora/ shiny-server.conf --transform='s,^,pv-monitoring-0.0.1/,'`
+  #`tar czvf pv-monitoring.0.0.1.tar.gz --transform='s,^,pv-monitoring-0.0.1/,' pvplot/today/*  aurora/ shiny-server.conf`
+  `cp pv-monitoring.0.0.1.tar.gz ~/rpmbuild/SOURCES`
 end

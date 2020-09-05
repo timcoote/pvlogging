@@ -3,7 +3,6 @@ Version:    1.9.3
 Release:    1%{?dist}
 Summary:    Log data from Aurora inverter
 License:    FIXME
-Requires:   shiny-server
 Source0:    http://www.curtronics.com/Solar/ftp/aurora-1.9.3.tar.gz
 Patch:      aurora.patch
 
