@@ -21,6 +21,8 @@ end
 
 task 'rpm' do
   `rpmbuild -ba pv-monitoring.spec`
+  # switch causes unvalidated download of source
+  `rpmbuild --undefine=_disable_source_fetch -ba aurora.spec`
 end
 
 
@@ -29,5 +31,10 @@ task 'tarup' do
   #`tar czvf pv-monitor.0.0.1.tar.gz pvplot/today/* shiny-server.conf`
   `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/*  aurora/ shiny-server.conf --transform='s,^,pv-monitoring-0.0.1/,'`
   #`tar czvf pv-monitoring.0.0.1.tar.gz --transform='s,^,pv-monitoring-0.0.1/,' pvplot/today/*  aurora/ shiny-server.conf`
-  `cp pv-monitoring.0.0.1.tar.gz ~/rpmbuild/SOURCES`
+  `cp pv-monitoring.0.0.1.tar.gz packaging/aurora.patch ~/rpmbuild/SOURCES`
+end
+
+task 'forward' do
+  # put rpms on to target box.
+  `scp ~/rpmbuild/RPMS/* tim@linux.example.com:`
 end

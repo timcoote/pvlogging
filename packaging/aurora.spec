@@ -1,6 +1,6 @@
 Name:       aurora
 Version:    1.9.3
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Log data from Aurora inverter
 License:    FIXME
 Source0:    http://www.curtronics.com/Solar/ftp/aurora-1.9.3.tar.gz
@@ -14,7 +14,7 @@ Logs data from the Aurora Power One inverter.
 %autosetup
 
 %build
-%make_build
+%make_build ARCH=NONE TUNE=generic
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -29,3 +29,5 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %changelog
 * Mon Aug 17 2020 Tim Coote <tim+github.com@example.com>
 - rpm of released code
+* Sun Sep 6 2020 Tim Coote <tim+github.com@example.com>
+- generic compilation to avoid Illegal Instruction
