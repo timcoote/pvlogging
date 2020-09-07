@@ -1,5 +1,5 @@
 Name:       pv-monitoring
-Version:    0.0.1
+Version:    0.0.2
 Release:    1%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME
@@ -26,15 +26,16 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/var/run/aurora
 ##make DESTDIR=$RPM_BUILD_ROOT install
 
-install -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.1/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
-install -m 644 -D $RPM_BUILD_DIR/pv-monitoring-0.0.1/aurora/aurora.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/aurora
+install -v -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
+install -v           $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/wrap-aurora $RPM_BUILD_ROOT/usr/local/bin/wrap-aurora 
+install -v -m 644 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/aurora.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/aurora
 
 # Install systemd service files
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
 for s in aurora-logging.service; do
   # ?? install -p -m 644 $RPM_SOURCE_DIR/aurora/${s} \
   # something wrong here. at least need variables
-  install -p -m 644 $RPM_BUILD_DIR/pv-monitoring-0.0.1/aurora/${s} \
+  install -p -m 644 $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/${s} \
                     $RPM_BUILD_ROOT%{_unitdir}/${s}
 done
 
@@ -62,9 +63,12 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 /etc/shiny-server/shiny-server.conf
 %{_unitdir}/aurora-logging.service
 /usr/local/bin/run-aurora
+/usr/local/bin/wrap-aurora
 /var/run/aurora
 /etc/logrotate.d/aurora
 
 %changelog
 * Sun Aug 16 2020 Tim Coote <tim+github.com@example.com>
 - first version
+* Sun Sep 6 2020 Tim Coote <tim+github.com@example.com>
+- fix app location

@@ -1,6 +1,15 @@
 # development task, action on git repo
 #
 # this on host
+#
+require 'rake/clean'
+
+pv_ver = '0.0.2'
+RPMS = Rake::FileList.new ("#{Dir.home}/rpmbuild/RPMS/**")
+
+puts "to be cleaned #{RPMS}, #{Dir.home}"
+CLEAN.include  [ "#{RPMS}" ]
+
 task 'addpvplot' do
   `git subtree add --prefix pvplot  git@github.com:timcoote/pvplot.git master --squash`
 end
@@ -14,27 +23,30 @@ end
 
 
 # packaging tasks
-task 'packageup' do
-  `echo "tar up the source files into?? and put them where they\'re needed"`
-  `tar xzvf ~/rpmbuild/SOURCES/tarball.tar.gz shiny-server.conf`
-end
+#task 'packageup' do
+#  `echo "tar up the source files into?? and put them where they\'re needed"`
+#  `tar xzvf ~/rpmbuild/SOURCES/tarball.tar.gz shiny-server.conf`
+#end
 
-task 'rpm' do
-  `rpmbuild -ba pv-monitoring.spec`
+pv_mon_tar = "pv-monitoring.#{pv_ver}.tar.gz"
+
+task 'rpm' => FileList[pv_mon_tar] do
+  `rpmbuild -ba packaging/pv-monitoring.spec`
   # switch causes unvalidated download of source
-  `rpmbuild --undefine=_disable_source_fetch -ba aurora.spec`
+  `rpmbuild --undefine=_disable_source_fetch -ba packaging/aurora.spec`
 end
 
 
-task 'tarup' do
+file pv_mon_tar => FileList['shiny-server.conf', 'aurora/*', 'pvplot/today/*'] do |f|
   # need to check that this is on guest?
   #`tar czvf pv-monitor.0.0.1.tar.gz pvplot/today/* shiny-server.conf`
-  `tar czvf pv-monitoring.0.0.1.tar.gz pvplot/today/*  aurora/ shiny-server.conf --transform='s,^,pv-monitoring-0.0.1/,'`
+  puts "sources: #{f.prerequisites.all?}"
+  `tar czvf pv-monitoring.#{pv_ver}.tar.gz pvplot/today/*  aurora/ shiny-server.conf --transform='s,^,pv-monitoring-#{pv_ver}/,'`
   #`tar czvf pv-monitoring.0.0.1.tar.gz --transform='s,^,pv-monitoring-0.0.1/,' pvplot/today/*  aurora/ shiny-server.conf`
-  `cp pv-monitoring.0.0.1.tar.gz packaging/aurora.patch ~/rpmbuild/SOURCES`
+  `cp pv-monitoring.#{pv_ver}.tar.gz packaging/aurora.patch ~/rpmbuild/SOURCES`
 end
 
 task 'forward' do
   # put rpms on to target box.
-  `scp ~/rpmbuild/RPMS/* tim@linux.example.com:`
+  `scp ~/rpmbuild/RPMS/*/* tim@linux.example.com:`
 end

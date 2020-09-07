@@ -1,6 +1,7 @@
-/home/tim/logging/output {
+/var/run/aurora/output {
     daily
     mail tim@example.com
+    compress
     copytruncate
     rotate 23650
     postrotate

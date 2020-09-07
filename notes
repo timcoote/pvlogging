@@ -46,3 +46,14 @@ interestingly, post restore snapshot from post dnf, no login on refresh on brows
 now I'm really unclear. `package.install ("ggvis"), plus version_install ("dplyr", version=0.8.3)` has no dots in the plot. but if I restart the R session, it works. Is there soemthing in how R loads libraries? It distinguishes between `attached packages` and `loaded via a namespace (and not attached)`????
 
 If so, then I think that install.packages("ggvis") ought to fail even with R reset: 
+
+
+----
+-remove crud from above and other notes files?
+- remove commented out Rakefile code, etc
+- firewalld fixes (nft?)
+- notification of systemd services
+- workflow:
+-- on mac, make edits, then vagrant rsync
+-- on vagrant box, /vagrant, rake rpm; rake forward
+-- on linux box rpm -e pv-monitoring aurora; rpm -ivh pv-monitoring<latestversion> aurora<latestversion>
