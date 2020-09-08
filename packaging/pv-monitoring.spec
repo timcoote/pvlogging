@@ -70,10 +70,13 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 /etc/logrotate.d/aurora
 
 %changelog
-* Mon Sep 7 2020 Tim Coote <tim+github.com@example.com>
+* Mon Sep 7 2020 Tim Coote <tim+github.com@coote.org>
 - fix logrotate and systemd integration
 - fix timout too low
-* Sun Sep 6 2020 Tim Coote <tim+github.com@example.com>
+
+* Sun Sep 6 2020 Tim Coote <tim+github.com@coote.org>
 - fix app location
-* Sun Aug 16 2020 Tim Coote <tim+github.com@example.com>
+
+* Sun Aug 16 2020 Tim Coote <tim+github.com@coote.org>
 - first version
+

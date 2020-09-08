@@ -27,7 +27,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc /usr/local/share/man/man1/aurora.1
 
 %changelog
-* Mon Aug 17 2020 Tim Coote <tim+github.com@example.com>
+* Mon Aug 17 2020 Tim Coote <tim+github.com@coote.org>
 - rpm of released code
-* Sun Sep 6 2020 Tim Coote <tim+github.com@example.com>
+* Sun Sep 6 2020 Tim Coote <tim+github.com@coote.org>
 - generic compilation to avoid Illegal Instruction
