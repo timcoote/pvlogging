@@ -1,5 +1,5 @@
 Name:       pv-monitoring
-Version:    0.0.2
+Version:    0.0.3
 Release:    1%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME
@@ -24,18 +24,19 @@ provide plots of data. Initially, these plots are /today, and, day?<date>
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/var/run/aurora
-##make DESTDIR=$RPM_BUILD_ROOT install
 
-install -v -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
-install -v           $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/wrap-aurora $RPM_BUILD_ROOT/usr/local/bin/wrap-aurora 
-install -v -m 644 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/aurora.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/aurora
+# breakage here. Cannot get wrap-aurora to instll with the correct mode
+#install -v -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
+install -v -m 755 -D $RPM_BUILD_DIR/%{name}-%{version}/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
+install -v           $RPM_BUILD_DIR/%{name}-%{version}/aurora/wrap-aurora $RPM_BUILD_ROOT/usr/local/bin/wrap-aurora 
+install -v -m 644 -D $RPM_BUILD_DIR/%{name}-%{version}/aurora/aurora.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/aurora
 
 # Install systemd service files
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
 for s in aurora-logging.service; do
   # ?? install -p -m 644 $RPM_SOURCE_DIR/aurora/${s} \
   # something wrong here. at least need variables
-  install -p -m 644 $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/${s} \
+  install -p -m 644 $RPM_BUILD_DIR/%{name}-%{version}/aurora/${s} \
                     $RPM_BUILD_ROOT%{_unitdir}/${s}
 done
 
@@ -52,8 +53,9 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 %preun
 %systemd_preun aurora-logging.service
 
+# fron here: https://bit.ly/3lVmHod, note this for future: https://red.ht/3jTeVcz
 %postun
-%systemd_postun aurora-logging.service
+%systemd_postun_with_restart aurora-logging.service
 
 %files
 # %%license add-license-file-here
@@ -68,7 +70,10 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 /etc/logrotate.d/aurora
 
 %changelog
-* Sun Aug 16 2020 Tim Coote <tim+github.com@example.com>
-- first version
+* Mon Sep 7 2020 Tim Coote <tim+github.com@example.com>
+- fix logrotate and systemd integration
+- fix timout too low
 * Sun Sep 6 2020 Tim Coote <tim+github.com@example.com>
 - fix app location
+* Sun Aug 16 2020 Tim Coote <tim+github.com@example.com>
+- first version

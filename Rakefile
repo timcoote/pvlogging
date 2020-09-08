@@ -4,7 +4,7 @@
 #
 require 'rake/clean'
 
-pv_ver = '0.0.2'
+pv_ver = '0.0.3'
 RPMS = Rake::FileList.new ("#{Dir.home}/rpmbuild/RPMS/**")
 
 puts "to be cleaned #{RPMS}, #{Dir.home}"
@@ -48,5 +48,5 @@ end
 
 task 'forward' do
   # put rpms on to target box.
-  `scp ~/rpmbuild/RPMS/*/* tim@linux.example.com:`
+  `scp ~/rpmbuild/RPMS/*/* #{ENV["monitoring"]}:`
 end
