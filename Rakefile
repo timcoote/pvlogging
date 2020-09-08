@@ -20,17 +20,16 @@ file '~/rpmbuild' do
   `rpmdev-setuptree`
 end
 
-
-
-# packaging tasks
-#task 'packageup' do
-#  `echo "tar up the source files into?? and put them where they\'re needed"`
-#  `tar xzvf ~/rpmbuild/SOURCES/tarball.tar.gz shiny-server.conf`
-#end
+# Documentation of shiny-server installation. Not needed on host or guest, only monitoring computer
+task 'install-shiny-server' do
+    `curl -O https://download3.rstudio.org/centos6.3/x86_64/shiny-server-1.5.14.948-x86_64.rpm`
+    `sudo dnf install -y --nogpgcheck shiny-server-1.5.14.948-x86_64.rpm`
+end
 
 pv_mon_tar = "pv-monitoring.#{pv_ver}.tar.gz"
+sources = FileList.new ("#{Dir.home}/rpmbuild/SOURCES/aurora.patch")
 
-task 'rpm' => FileList[pv_mon_tar] do
+task 'rpm' => FileList[pv_mon_tar, 'get_sources'] do
   `rpmbuild -ba packaging/pv-monitoring.spec`
   # switch causes unvalidated download of source
   `rpmbuild --undefine=_disable_source_fetch -ba packaging/aurora.spec`
@@ -43,6 +42,9 @@ file pv_mon_tar => FileList['shiny-server.conf', 'aurora/*', 'pvplot/today/*'] d
   puts "sources: #{f.prerequisites.all?}"
   `tar czvf pv-monitoring.#{pv_ver}.tar.gz pvplot/today/*  aurora/ shiny-server.conf --transform='s,^,pv-monitoring-#{pv_ver}/,'`
   #`tar czvf pv-monitoring.0.0.1.tar.gz --transform='s,^,pv-monitoring-0.0.1/,' pvplot/today/*  aurora/ shiny-server.conf`
+end
+
+task 'get_sources' do
   `cp pv-monitoring.#{pv_ver}.tar.gz packaging/aurora.patch ~/rpmbuild/SOURCES`
 end
 
