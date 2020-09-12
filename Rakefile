@@ -16,7 +16,7 @@ end
 
 # these on guest
 # setup rpmbuild environment
-file '~/rpmbuild' do
+file '#{Dir.home}/rpmbuild' do
   `rpmdev-setuptree`
 end
 
@@ -51,4 +51,17 @@ end
 task 'forward' do
   # put rpms on to target box.
   `scp ~/rpmbuild/RPMS/*/* #{ENV["monitoring"]}:`
+end
+
+task 'buildchroot' do
+  `sudo dnf install -y qemu-system-aarch64 qemu-user-static virt-manager`
+end
+
+task 'mkchroot' do
+  `sudo dnf install --releasever=32 --installroot=/tmp/F32ARM --forcearch=aarch64 --repo=fedora --repo=updates systemd passwd dnf fedora-release vim-minimal cmake  python3 gcc-c++ tar gcc git make rubygem-rake iputils rpmdevtools -y`
+end
+
+
+file 'iid' => FileList['Rakefile'] do
+  `buildah bud --override-arch arm64 --iidfile iid .`
 end
