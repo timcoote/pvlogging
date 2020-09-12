@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
     sut.vm.provision "file", source: "~/.aws/credentials", destination: "/home/#{user}/.aws/credentials"
 
     sut.vm.provision "shell", inline: <<-SHELL
-       dnf install -y qemu-system-aarch64 rake buildah podman qemu-user-static
+       dnf install -y qemu-system-aarch64 rake buildah podman qemu-user-static rpmdevtools
        sudo systemctl restart systemd-binfmt # required after installing qemu-user-static to use interpreter on relevant binaries
 
 # not needed for rpm builds, just if there's a need to spin up R/Rstudio

@@ -1,6 +1,6 @@
 Name:       pv-monitoring
-Version:    0.0.3
-Release:    1%{?dist}
+Version:    0.0.4
+Release:    2%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME
 Requires:   shiny-server
@@ -40,8 +40,8 @@ for s in aurora-logging.service; do
                     $RPM_BUILD_ROOT%{_unitdir}/${s}
 done
 
-#install -m 755 pvplot/today/*R %{buildroot}/srv/shiny-server/examples/today/
-ex_dir=srv/shiny-server/sample-apps/today
+#install -m 755 pvplot/today/*R %{buildroot}/opt/shiny-server/examples/today/
+ex_dir=opt/shiny-server/sample-apps/today
 mkdir -p $RPM_BUILD_ROOT/$ex_dir
 install -m 755 pvplot/today/*R $RPM_BUILD_ROOT/$ex_dir
 mkdir -p $RPM_BUILD_ROOT/etc/shiny-server
@@ -60,8 +60,8 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 %files
 # %%license add-license-file-here
 # %%doc add-docs-here
-/srv/shiny-server/sample-apps/today/ui.R
-/srv/shiny-server/sample-apps/today/server.R
+/opt/shiny-server/sample-apps/today/ui.R
+/opt/shiny-server/sample-apps/today/server.R
 /etc/shiny-server/shiny-server.conf
 %{_unitdir}/aurora-logging.service
 /usr/local/bin/run-aurora
@@ -70,6 +70,9 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 /etc/logrotate.d/aurora
 
 %changelog
+* Sat Sep 12 2020 Tim Coote <tim+github.com@coote.org>
+- move from /srv to /opt for rpm-ostree friendliness
+
 * Mon Sep 7 2020 Tim Coote <tim+github.com@coote.org>
 - fix logrotate and systemd integration
 - fix timout too low

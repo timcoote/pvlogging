@@ -4,7 +4,7 @@
 #
 require 'rake/clean'
 
-pv_ver = '0.0.3'
+pv_ver = '0.0.4'
 RPMS = Rake::FileList.new ("#{Dir.home}/rpmbuild/RPMS/**")
 
 puts "to be cleaned #{RPMS}, #{Dir.home}"
@@ -16,7 +16,7 @@ end
 
 # these on guest
 # setup rpmbuild environment
-file '#{Dir.home}/rpmbuild' do
+file "#{Dir.home}/rpmbuild/" do
   `rpmdev-setuptree`
 end
 
@@ -29,7 +29,8 @@ end
 pv_mon_tar = "pv-monitoring.#{pv_ver}.tar.gz"
 sources = FileList.new ("#{Dir.home}/rpmbuild/SOURCES/aurora.patch")
 
-task 'rpm' => FileList[pv_mon_tar, 'get_sources'] do
+task 'rpm' => FileList["#{Dir.home}/rpmbuild/", pv_mon_tar, 'get_sources'] do |t|
+  puts t.prerequisites
   `rpmbuild -ba packaging/pv-monitoring.spec`
   # switch causes unvalidated download of source
   `rpmbuild --undefine=_disable_source_fetch -ba packaging/aurora.spec`
