@@ -1,6 +1,6 @@
 Name:       pv-monitoring
 Version:    0.0.4
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME
 Requires:   shiny-server
@@ -27,8 +27,8 @@ mkdir -p $RPM_BUILD_ROOT/var/run/aurora
 
 # breakage here. Cannot get wrap-aurora to instll with the correct mode
 #install -v -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
-install -v -m 755 -D $RPM_BUILD_DIR/%{name}-%{version}/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
-install -v           $RPM_BUILD_DIR/%{name}-%{version}/aurora/wrap-aurora $RPM_BUILD_ROOT/usr/local/bin/wrap-aurora 
+install -v -m 755 -D $RPM_BUILD_DIR/%{name}-%{version}/aurora/run-aurora $RPM_BUILD_ROOT/usr/bin/run-aurora 
+install -v           $RPM_BUILD_DIR/%{name}-%{version}/aurora/wrap-aurora $RPM_BUILD_ROOT/usr/bin/wrap-aurora 
 install -v -m 644 -D $RPM_BUILD_DIR/%{name}-%{version}/aurora/aurora.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/aurora
 
 # Install systemd service files
@@ -64,14 +64,15 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 /opt/shiny-server/sample-apps/today/server.R
 /etc/shiny-server/shiny-server.conf
 %{_unitdir}/aurora-logging.service
-/usr/local/bin/run-aurora
-/usr/local/bin/wrap-aurora
+/usr/bin/run-aurora
+/usr/bin/wrap-aurora
 /var/run/aurora
 /etc/logrotate.d/aurora
 
 %changelog
 * Sat Sep 12 2020 Tim Coote <tim+github.com@coote.org>
 - move from /srv to /opt for rpm-ostree friendliness
+- move from /usr/local to /usr for rpm-ostree friendliness
 
 * Mon Sep 7 2020 Tim Coote <tim+github.com@coote.org>
 - fix logrotate and systemd integration

@@ -1,0 +1,50 @@
+diff --git a/CRONTAB b/CRONTAB
+old mode 100755
+new mode 100644
+index 6a43526..7a0e6ba
+--- a/CRONTAB
++++ b/CRONTAB
+@@ -2,9 +2,9 @@
+ I use this cron command to collect data when the sun is out. It creates
+ a new data file for each day based on the date.
+ 
+-* 5-21 * * * /usr/local/bin/aurora -T -c -e -d -a 2 /dev/ttyS1 >> /data01/Solar/data/`date +\%Y\%m\%d`.dat 2>> /data01/Solar/logs/`date +\%Y\%m\%d`.err
++* 5-21 * * * /usr/bin/aurora -T -c -e -d -a 2 /dev/ttyS1 >> /data01/Solar/data/`date +\%Y\%m\%d`.dat 2>> /data01/Solar/logs/`date +\%Y\%m\%d`.err
+ 
+ or 
+ 
+-* 5-21 * * * /usr/local/bin/aurora -T -c -e -d -a 2 -o /data01/Solar/data/`date +\%Y\%m\%d`.dat /dev/ttyS1 2>> /data01/Solar/logs/`date +\%Y\%m\%d`.err
++* 5-21 * * * /usr/bin/aurora -T -c -e -d -a 2 -o /data01/Solar/data/`date +\%Y\%m\%d`.dat /dev/ttyS1 2>> /data01/Solar/logs/`date +\%Y\%m\%d`.err
+ 
+diff --git a/INSTALL b/INSTALL
+old mode 100755
+new mode 100644
+index 7a8fa5c..8417030
+--- a/INSTALL
++++ b/INSTALL
+@@ -4,8 +4,8 @@ optimum compile method. Most of the time you can simply untar
+ and do a 'make' and you're good to go on AMD and Intel platforms. 
+ However on other platforms such as ARM processors you may have to 
+ manually tweak the Makefile to optimize the compile. Then doing 
+-'make install' will put the binary in /usr/local/bin/ and the 
+-manpage in /usr/local/share/man/man1/ (Thank you Dustin Kirkland 
++'make install' will put the binary in /usr/bin/ and the 
++manpage in /usr/share/man/man1/ (Thank you Dustin Kirkland 
+ for initial creation of the manpage.)
+ 
+ If you get any errors from the 'make' please provide the output
+diff --git a/Makefile b/Makefile
+old mode 100755
+new mode 100644
+index c911e8e..a34467d
+--- a/Makefile
++++ b/Makefile
+@@ -17,7 +17,7 @@ bindir = ${exec_prefix}/bin
+ datarootdir = ${prefix}/share
+ exec_prefix = ${prefix}
+ mandir = ${datarootdir}/man
+-prefix = /usr/local
++prefix = /usr
+ 
+ BIT := $(shell getconf LONG_BIT)
+ BIT64 = -Dbit$(BIT)

@@ -1,3 +1,3 @@
 #!/usr/bin/sh
-catchsegv /usr/bin/sh -x /usr/local/bin/run-aurora > /var/run/aurora/stuff 2>&1
+catchsegv /usr/bin/sh -x /usr/bin/run-aurora > /var/run/aurora/stuff 2>&1
 

@@ -5,7 +5,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/wrap-aurora
+ExecStart=/usr/bin/wrap-aurora
 Restart=always
 # according to (http://bit.ly/2seiymQ), should keep on restarting forever
 StartLimitInterval=0
