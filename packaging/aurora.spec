@@ -25,7 +25,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 # %%license add-license-file-here
 # %%doc add-docs-here
 /usr/bin/aurora
-%doc /usr/share/man/man1/aurora.1
+%doc /usr/share/man/man1/aurora.1.gz
 
 %changelog
 * Sat Sep 12 2020 Tim Coote <tim+github.com@coote.org>

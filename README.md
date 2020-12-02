@@ -3,7 +3,7 @@
 ## Introduction
 
 This repo was an exercise in using rpm to package multiple services, specifically capturing and plotting solar panel performance. The plotting repo is separately
-at `githum.com/timcoote/pvplot`. It started out with the intention of running Shiny-Server over IPv6 with proprietary fixes for 32bit computers. Now it works with
+at `github.com/timcoote/pvplot`. It started out with the intention of running Shiny-Server over IPv6 with proprietary fixes for 32bit computers. Now it works with
 a standard Shiny Server - although not packaged as a Fedora rpm - and includes some fixes to R that broke the original code (`https://bit.ly/30sfAeg`).
 
 ## Basic Workflow

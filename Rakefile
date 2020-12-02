@@ -27,7 +27,7 @@ task 'install-shiny-server' do
 end
 
 pv_mon_tar = "pv-monitoring.#{pv_ver}.tar.gz"
-sources = FileList.new ("#{Dir.home}/rpmbuild/SOURCES/aurora.patch")
+sources = FileList.new ("#{Dir.home}/rpmbuild/SOURCES/aurora*.patch")
 
 task 'rpm' => FileList["#{Dir.home}/rpmbuild/", pv_mon_tar, 'get_sources'] do |t|
   puts t.prerequisites
@@ -46,7 +46,7 @@ file pv_mon_tar => FileList['shiny-server.conf', 'aurora/*', 'pvplot/today/*'] d
 end
 
 task 'get_sources' do
-  `cp pv-monitoring.#{pv_ver}.tar.gz packaging/aurora.patch ~/rpmbuild/SOURCES`
+  `cp pv-monitoring.#{pv_ver}.tar.gz packaging/aurora*.patch ~/rpmbuild/SOURCES`
 end
 
 task 'forward' do
