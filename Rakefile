@@ -4,7 +4,7 @@
 #
 require 'rake/clean'
 
-pv_ver = '0.0.4'
+pv_ver = '0.0.5'
 RPMS = Rake::FileList.new ("#{Dir.home}/rpmbuild/RPMS/**")
 
 puts "to be cleaned #{RPMS}, #{Dir.home}"

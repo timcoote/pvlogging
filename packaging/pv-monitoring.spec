@@ -1,5 +1,5 @@
 Name:       pv-monitoring
-Version:    0.0.4
+Version:    0.0.5
 Release:    3%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME
@@ -24,6 +24,7 @@ provide plots of data. Initially, these plots are /today, and, day?<date>
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/var/run/aurora
+mkdir -p $RPM_BUILD_ROOT/var/log/aurora
 
 # breakage here. Cannot get wrap-aurora to instll with the correct mode
 #install -v -m 755 -D $RPM_BUILD_DIR/pv-monitoring-0.0.2/aurora/run-aurora $RPM_BUILD_ROOT/usr/local/bin/run-aurora 
@@ -66,10 +67,17 @@ install -m 755 shiny-server.conf $RPM_BUILD_ROOT/etc/shiny-server/
 %{_unitdir}/aurora-logging.service
 /usr/bin/run-aurora
 /usr/bin/wrap-aurora
+/var/log/aurora
 /var/run/aurora
 /etc/logrotate.d/aurora
 
 %changelog
+* Wed Dec 2 2020 Tim Coote <tim+github.com@coote.org>
+- fix spellings
+- add multiple patches
+- move logged data to /var/log/aurora
+- bump to 0.0.5
+
 * Sat Sep 12 2020 Tim Coote <tim+github.com@coote.org>
 - move from /srv to /opt for rpm-ostree friendliness
 - move from /usr/local to /usr for rpm-ostree friendliness
