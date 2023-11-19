@@ -9,7 +9,8 @@ a standard Shiny Server - although not packaged as a Fedora rpm - and includes s
 ## Basic Workflow
 
 - spin up vagrant box
-- on vagrant box, in directory `/vagrant`, `rake rpm`; `rake forward` (requires target name/address of monitoring/plotting computer).
+- update versions in Rakefile and packaging/*spec (needs automating)
+- on vagrant box, in directory `/vagrant`, `rake rpm`; `rake forward` (requires target username@name/address of monitoring/plotting computer in the env var `monitoring`).
 - on linux box `sudo rpm -Uvh pv-monitoring<latestversion> aurora<latestversion>` (assumes already installed, services - `aurora-logging` and `shiny-server` are up and running. The rpm will restart the services, but not kick them off if not started.
 - plots appear on `http://monitoring-and-plotting-computer/today/`
 
@@ -22,3 +23,4 @@ a standard Shiny Server - although not packaged as a Fedora rpm - and includes s
 # TODO
 - notification of systemd services - partially complete, but see here: https://bit.ly/2R4a0ZY. Non-trivial for remove/install cycle as default enabled packages are defined external to packages.
 - build rpms for aarch64 using the resin.io tools.
+- sort out firewall on target box, eg with `firewall-cmd --add-port=tcp/80

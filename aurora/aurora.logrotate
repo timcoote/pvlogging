@@ -6,6 +6,7 @@
     rotate 23650
     postrotate
      pkill aurora || true
+    endscript
     lastaction
         cp /var/run/aurora/*.gz /var/log/aurora
     endscript

@@ -2,6 +2,7 @@
 Description=Collects data from the Aurora inverter
 #Documentation=< presented as a url >
 After=syslog.target network.target
+RuntimeDirectory=aurora
 
 [Service]
 Type=simple
