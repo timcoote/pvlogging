@@ -1,9 +1,9 @@
 Name:       aurora
-Version:    1.9.3
+Version:    1.9.4
 Release:    3%{?dist}
 Summary:    Log data from Aurora inverter
 License:    FIXME
-Source0:    http://www.curtronics.com/Solar/ftp/aurora-1.9.3.tar.gz
+Source0:    http://www.curtronics.com/Solar/ftp/aurora-1.9.4.tar.gz
 Patch0:      aurora.patch
 Patch1:      aurora-unlocal.patch
 
