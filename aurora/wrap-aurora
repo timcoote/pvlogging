@@ -1,3 +1,5 @@
 #!/usr/bin/sh
-catchsegv /usr/bin/sh -x /usr/bin/run-aurora > /var/run/aurora/stuff 2>&1
+# catchsegv removed from Fedora. Unsure on impact. I think it's just not needed
+# catchsegv /usr/bin/sh -x /usr/bin/run-aurora > /var/run/aurora/stuff 2>&1
+/usr/bin/sh -x /usr/bin/run-aurora > /var/run/aurora/stuff 2>&1
 
