@@ -22,7 +22,8 @@ Vagrant.configure("2") do |config|
     sut.vm.hostname = 'R-on-fedora'
 
     sut.vm.provider :virtualbox do |vb|
-     config.vm.box = "fedora/32-cloud-base"
+     config.vm.box = "fedora/38-cloud-base"
+     #config.vm.box_url = "https://download.fedoraproject.org/pub/fedora/linux/releases/38/Cloud/x86_64/images/Fedora-Cloud-Base-Vagrant-38-1.6.x86_64.vagrant-virtualbox.box"
      # more up to date?
      # still fails config.vm.box = "bento/fedora-30"
      #config.vm.box = "bento/fedora-28"

@@ -1,5 +1,5 @@
 Name:       pv-monitoring
-Version:    0.0.7
+Version:    0.0.8
 Release:    3%{?dist}
 Summary:    Monitor and plot pv outputs
 License:    FIXME

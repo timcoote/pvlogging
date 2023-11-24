@@ -4,7 +4,7 @@
 #
 require 'rake/clean'
 
-pv_ver = '0.0.7'
+pv_ver = '0.0.8'  # should pull from packaging/pv-monitoring.spec
 RPMS = Rake::FileList.new ("#{Dir.home}/rpmbuild/RPMS/**")
 
 puts "to be cleaned #{RPMS}, #{Dir.home}"
@@ -20,10 +20,10 @@ file "#{Dir.home}/rpmbuild/" do
   `rpmdev-setuptree`
 end
 
-# Documentation of shiny-server installation. Not needed on host or guest, only monitoring computer
+# Documentation of shiny-server installation. Moving to use on guest to test shiny app
 task 'install-shiny-server' do
-    `curl -O https://download3.rstudio.org/centos6.3/x86_64/shiny-server-1.5.14.948-x86_64.rpm`
-    `sudo dnf install -y --nogpgcheck shiny-server-1.5.14.948-x86_64.rpm`
+    `curl -O wget https://download3.rstudio.org/centos7/x86_64/shiny-server-1.5.20.1002-x86_64.rpm`
+    `sudo dnf install -y --nogpgcheck shiny-server-1.5.20.1002-x86_64.rpm`
 end
 
 pv_mon_tar = "pv-monitoring.#{pv_ver}.tar.gz"
